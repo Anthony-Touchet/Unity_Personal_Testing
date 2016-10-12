@@ -1,19 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Listener : MonoBehaviour {
 
-    bool hearingNoise;
     List<AudioSource> audioSources;
+
 
 	// Use this for initialization
 	void Start () {
-	    
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	    
+	    audioSources = FindSounds();
+
 	}
 
     List<AudioSource> FindSounds()
@@ -23,12 +25,21 @@ public class Listener : MonoBehaviour {
         {
             if (a.isPlaying)
             {
-                if((transform.position - a.transform.position).sqrMagnitude <= a.maxDistance)
-                audio.Add(a);
-            }
-                
+                if((transform.position - a.transform.position).magnitude <= a.maxDistance * )
+                    audio.Add(a);
+            }   
         }
 
         return audio;
+    }
+
+    void SampleAudio()
+    {
+        if(audioSources.Count > 0)
+        {
+            float[] samples;
+            samples = new float[44100];
+            audioSources[0].clip.GetData(samples, 0);
+        }
     }
 }
